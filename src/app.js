@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 
+const taskRoutes = require("./routes/taskRoutes");
+const notFound = require("./middleware/notFound");
+const errorHandler = require("./middleware/errorHandler");
+
 const app = express();
 
 app.use(
@@ -17,5 +21,10 @@ app.get("/api/v1/health", (req, res) => {
     message: "Server is running"
   });
 });
+
+app.use("/api/v1/tasks", taskRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;
